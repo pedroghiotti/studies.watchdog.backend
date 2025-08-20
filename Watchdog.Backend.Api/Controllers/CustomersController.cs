@@ -10,7 +10,7 @@ namespace Watchdog.Backend.Api.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class CustomerController (IMediator mediator, IMapper mapper)
+public class CustomersController (IMediator mediator, IMapper mapper)
     : ControllerBase
 {
     [HttpGet]
