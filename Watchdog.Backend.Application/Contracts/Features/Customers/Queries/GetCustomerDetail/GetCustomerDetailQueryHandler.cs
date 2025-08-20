@@ -2,7 +2,7 @@ using AutoMapper;
 using MediatR;
 using Watchdog.Backend.Application.Contracts.Persistence;
 
-namespace Watchdog.Backend.Application.Contracts.Features.Customers;
+namespace Watchdog.Backend.Application.Contracts.Features.Customers.Queries.GetCustomerDetail;
 
 public class GetCustomerDetailQueryHandler(ICustomerRepository customerRepository, IMapper mapper)
     : IRequestHandler<GetCustomerDetailQuery, CustomerDetailDto>
