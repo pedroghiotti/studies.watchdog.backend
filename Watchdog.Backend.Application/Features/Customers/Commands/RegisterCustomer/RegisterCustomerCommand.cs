@@ -1,6 +1,6 @@
 using MediatR;
 
-namespace Watchdog.Backend.Application.Contracts.Features.Customers.Commands.RegisterCustomer;
+namespace Watchdog.Backend.Application.Features.Customers.Commands.RegisterCustomer;
 
 public class RegisterCustomerCommand : IRequest<Guid>
 {

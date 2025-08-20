@@ -1,6 +1,6 @@
 using MediatR;
 
-namespace Watchdog.Backend.Application.Contracts.Features.Customers.Commands.UpdateCustomerData;
+namespace Watchdog.Backend.Application.Features.Customers.Commands.UpdateCustomerData;
 
 public class UpdateCustomerDataCommand : IRequest
 {

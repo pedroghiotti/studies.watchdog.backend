@@ -1,6 +1,6 @@
 using MediatR;
 
-namespace Watchdog.Backend.Application.Contracts.Features.Customers.Queries.GetCustomersList;
+namespace Watchdog.Backend.Application.Features.Customers.Queries.GetCustomersList;
 
 public class GetCustomersListQuery : IRequest<List<CustomerListDto>>
 {

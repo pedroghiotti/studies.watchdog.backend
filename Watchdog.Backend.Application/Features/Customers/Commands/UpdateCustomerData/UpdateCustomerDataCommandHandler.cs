@@ -3,7 +3,7 @@ using MediatR;
 using Watchdog.Backend.Application.Contracts.Persistence;
 using Watchdog.Backend.Application.Exceptions;
 
-namespace Watchdog.Backend.Application.Contracts.Features.Customers.Commands.UpdateCustomerData;
+namespace Watchdog.Backend.Application.Features.Customers.Commands.UpdateCustomerData;
 
 public class UpdateCustomerDataCommandHandler (ICustomerRepository customerRepository, IMapper mapper)
     : IRequestHandler<UpdateCustomerDataCommand>

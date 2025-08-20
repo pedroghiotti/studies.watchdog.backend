@@ -1,4 +1,4 @@
-namespace Watchdog.Backend.Application.Contracts.Features.Customers.Queries.GetCustomerDetail;
+namespace Watchdog.Backend.Application.Features.Customers.Queries.GetCustomerDetail;
 
 public class CustomerDetailDto
 {
