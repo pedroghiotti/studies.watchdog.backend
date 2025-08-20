@@ -4,5 +4,5 @@ namespace Watchdog.Backend.Application.Contracts.Persistence;
 
 public interface ICustomerRepository : IAsyncRepository<Customer>
 {
-    
+    public Task<bool> IsCustomerEmailUnique(string email);
 }

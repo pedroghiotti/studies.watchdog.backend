@@ -13,7 +13,7 @@ public class RegisterCustomerCommandHandler (ICustomerRepository customerReposit
     {
         var newCustomer = mapper.Map<Customer>(request);
         
-        var validator = new RegisterCustomerCommandValidator();
+        var validator = new RegisterCustomerCommandValidator(customerRepository);
         var validationResult = await validator.ValidateAsync(request, cancellationToken);
 
         if (!validationResult.IsValid)
