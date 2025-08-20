@@ -36,11 +36,11 @@ public class RegisterCustomerCommandHandler (ICustomerRepository customerReposit
         {
             await emailService.SendEmailAsync(email);
         }
-        catch (Exception e)
+        catch (Exception)
         {
-            
+            // ignored
         }
-        
+
         return newCustomer.CustomerId;
     }
 }

@@ -4,7 +4,7 @@ namespace Watchdog.Backend.Application;
 
 public static class ApplicationServiceRegistration
 {
-    public static IServiceCollection RegisterApplicationServices(this IServiceCollection services)
+    public static IServiceCollection AddApplicationServices(this IServiceCollection services)
     {
         services.AddAutoMapper(c => { }, AppDomain.CurrentDomain.GetAssemblies());
         services.AddMediatR(c =>

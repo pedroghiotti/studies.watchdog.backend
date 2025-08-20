@@ -10,7 +10,7 @@ public class Customer : AuditableEntity
     public string Email { get; set; } = string.Empty;
     public string PhoneNumber { get; set; } = string.Empty;
     
-    public ICollection<Tag>? OwnedTags { get; set; } = new List<Tag>();
+    public ICollection<Tag>? Tags { get; set; } = new List<Tag>();
     
-    public ICollection<Pet>? OwnedPets { get; set; } = new List<Pet>();
+    public ICollection<Pet>? Pets { get; set; } = new List<Pet>();
 }

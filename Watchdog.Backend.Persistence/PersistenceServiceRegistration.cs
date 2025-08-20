@@ -12,13 +12,15 @@ public static class PersistenceServiceRegistration
         IConfiguration configuration)
     {
         services.AddDbContext<AppDbContext>(options =>
-            options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"))
+            options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"),
+                o => o.MigrationsAssembly("Watchdog.Backend.Api")
+            )
         );
 
         services.AddScoped(typeof(IAsyncRepository<>), typeof(BaseRepository<>));
 
         services.AddScoped<ICustomerRepository, CustomerRepository>();
-        
+
         return services;
     }
 }

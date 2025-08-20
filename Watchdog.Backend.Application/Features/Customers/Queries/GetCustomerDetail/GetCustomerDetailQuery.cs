@@ -4,5 +4,5 @@ namespace Watchdog.Backend.Application.Features.Customers.Queries.GetCustomerDet
 
 public class GetCustomerDetailQuery : IRequest<CustomerDetailDto>
 {
-    public Guid CustomerId { get; set; }
+    public required Guid CustomerId { get; set; }
 }
