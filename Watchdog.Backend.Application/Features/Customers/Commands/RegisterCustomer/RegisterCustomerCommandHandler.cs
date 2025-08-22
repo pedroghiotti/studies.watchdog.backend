@@ -35,8 +35,9 @@ public class RegisterCustomerCommandHandler (ICustomerRepository customerReposit
 
         return new RegisterCustomerCommandResponse
         {
-            Customer = mapper.Map<CustomerDetailDto>(newCustomer),
-            Message = "Customer registered successfully."
+            Success = true,
+            Message = "Customer registered successfully.",
+            Customer = mapper.Map<CustomerDetailDto>(newCustomer)
         };
     }
 

@@ -2,7 +2,7 @@ using MediatR;
 
 namespace Watchdog.Backend.Application.Features.Customers.Commands.UpdateCustomerData;
 
-public class UpdateCustomerDataCommand : IRequest
+public class UpdateCustomerDataCommand : IRequest<UpdateCustomerDataCommandResponse>
 {
     public required Guid CustomerId { get; set; }
     public required string Name { get; set; }

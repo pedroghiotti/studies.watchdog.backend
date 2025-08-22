@@ -6,19 +6,29 @@ using Watchdog.Backend.Application.Exceptions;
 namespace Watchdog.Backend.Application.Features.Customers.Commands.UpdateCustomerData;
 
 public class UpdateCustomerDataCommandHandler (ICustomerRepository customerRepository, IMapper mapper)
-    : IRequestHandler<UpdateCustomerDataCommand>
+    : IRequestHandler<UpdateCustomerDataCommand, UpdateCustomerDataCommandResponse>
 {
-    public async Task Handle(UpdateCustomerDataCommand request, CancellationToken cancellationToken)
+    public async Task<UpdateCustomerDataCommandResponse> Handle(UpdateCustomerDataCommand request, CancellationToken cancellationToken)
     {
         var customer = await customerRepository.GetByIdAsync(request.CustomerId);
         
         if (customer == null)
         {
-            throw new NotFoundException("Customer", request.CustomerId);
+            return new UpdateCustomerDataCommandResponse
+            {
+                Success = false,
+                Message = $"Customer with ID {request.CustomerId} not found."
+            };
         }
         
         mapper.Map(request, customer);
         
         await customerRepository.UpdateAsync(customer);
+
+        return new UpdateCustomerDataCommandResponse
+        {
+            Success = true,
+            Message = "Customer data updated successfully."
+        };
     }
 }

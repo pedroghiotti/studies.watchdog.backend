@@ -5,11 +5,16 @@ using Watchdog.Backend.Application.Contracts.Persistence;
 namespace Watchdog.Backend.Application.Features.Customers.Queries.GetCustomersList;
 
 public class GetCustomersListQueryHandler(ICustomerRepository customerRepository, IMapper mapper)
-    : IRequestHandler<GetCustomersListQuery, List<CustomerListDto>>
+    : IRequestHandler<GetCustomersListQuery, GetCustomersListQueryResponse>
 {
-    public async Task<List<CustomerListDto>> Handle(GetCustomersListQuery request, CancellationToken cancellationToken)
+    public async Task<GetCustomersListQueryResponse> Handle(GetCustomersListQuery request, CancellationToken cancellationToken)
     {
         var customers = await customerRepository.GetAllAsync();
-        return mapper.Map<List<CustomerListDto>>(customers);
+        
+        return new GetCustomersListQueryResponse
+        {
+            Success = true,
+            Customers = mapper.Map<List<CustomerListDto>>(customers)
+        };
     }
 }

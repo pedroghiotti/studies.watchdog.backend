@@ -28,10 +28,15 @@ public class CustomersController (IMediator mediator, IMapper mapper)
     }
 
     [HttpPost]
-    public async Task<IActionResult> RegisterCustomer([FromBody] CustomerRegisterDto customerRegisterDto)
+    public async Task<ActionResult<RegisterCustomerCommandResponse>> RegisterCustomer([FromBody] CustomerRegisterDto customerRegisterDto)
     {
         var registerCustomerCommand = mapper.Map<RegisterCustomerCommand>(customerRegisterDto);
-        var newCustomerId = await mediator.Send(registerCustomerCommand);
-        return CreatedAtAction(nameof(GetCustomerById), new { customerId = newCustomerId }, newCustomerId);
+        var response = await mediator.Send(registerCustomerCommand);
+        if (!response.Success)
+        {
+            return BadRequest(response);
+        }
+        var newCustomerId = response.Customer!.CustomerId;
+        return CreatedAtAction(nameof(GetCustomerById), new { customerId = newCustomerId }, response);
     }
 }

@@ -15,7 +15,8 @@ public class RegisterCustomerCommandValidator : AbstractValidator<RegisterCustom
             .NotEmpty().WithMessage("Email is required.")
             .EmailAddress().WithMessage("Invalid email format.")
             .MaximumLength(100).WithMessage("Email must not exceed 100 characters.")
-            .MustAsync(async (email, cancellation) => await customerRepository.IsCustomerEmailUnique(email));
+            .MustAsync(async (email, cancellation) =>
+                await customerRepository.IsCustomerEmailUnique(email)).WithMessage("Email is already in use.");
 
         RuleFor(c => c.PhoneNumber)
             .NotEmpty().WithMessage("Phone number is required.")
