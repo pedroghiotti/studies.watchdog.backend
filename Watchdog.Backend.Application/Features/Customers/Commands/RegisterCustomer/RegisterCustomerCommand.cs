@@ -2,7 +2,7 @@ using MediatR;
 
 namespace Watchdog.Backend.Application.Features.Customers.Commands.RegisterCustomer;
 
-public class RegisterCustomerCommand : IRequest<Guid>
+public class RegisterCustomerCommand : IRequest<RegisterCustomerCommandResponse>
 {
     public required string Name { get; set; }
     public required string Email { get; set; }

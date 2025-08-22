@@ -3,28 +3,45 @@ using MediatR;
 using Watchdog.Backend.Application.Contracts.Infrastructure;
 using Watchdog.Backend.Application.Contracts.Persistence;
 using Watchdog.Backend.Application.Exceptions;
+using Watchdog.Backend.Application.Features.Customers.Queries.GetCustomerDetail;
 using Watchdog.Backend.Application.Models.Mail;
 using Watchdog.Backend.Domain.Entities;
 
 namespace Watchdog.Backend.Application.Features.Customers.Commands.RegisterCustomer;
 
 public class RegisterCustomerCommandHandler (ICustomerRepository customerRepository, IMapper mapper, IEmailService emailService)
-    : IRequestHandler<RegisterCustomerCommand, Guid>
+    : IRequestHandler<RegisterCustomerCommand, RegisterCustomerCommandResponse>
 {
-    public async Task<Guid> Handle(RegisterCustomerCommand request, CancellationToken cancellationToken)
+    public async Task<RegisterCustomerCommandResponse> Handle(RegisterCustomerCommand request, CancellationToken cancellationToken)
     {
         var newCustomer = mapper.Map<Customer>(request);
-        
+
         var validator = new RegisterCustomerCommandValidator(customerRepository);
         var validationResult = await validator.ValidateAsync(request, cancellationToken);
 
         if (!validationResult.IsValid)
         {
-            throw new ValidationException(validationResult);
+            return new RegisterCustomerCommandResponse
+            {
+                Success = false,
+                Message = "Customer registration failed.",
+                ValidationErrors = validationResult.Errors.Select(x => x.ErrorMessage).ToList()
+            };
         }
 
         await customerRepository.AddAsync(newCustomer);
         
+        await SendCustomerRegisteredWelcomeEmail(request);
+
+        return new RegisterCustomerCommandResponse
+        {
+            Customer = mapper.Map<CustomerDetailDto>(newCustomer),
+            Message = "Customer registered successfully."
+        };
+    }
+
+    private async Task SendCustomerRegisteredWelcomeEmail(RegisterCustomerCommand request)
+    {
         var email = new Email
         {
             To = request.Email,
@@ -36,11 +53,6 @@ public class RegisterCustomerCommandHandler (ICustomerRepository customerReposit
         {
             await emailService.SendEmailAsync(email);
         }
-        catch (Exception)
-        {
-            // ignored
-        }
-
-        return newCustomer.CustomerId;
+        catch (Exception) { /* ignored */}
     }
 }

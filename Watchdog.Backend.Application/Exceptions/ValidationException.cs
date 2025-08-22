@@ -4,9 +4,9 @@ namespace Watchdog.Backend.Application.Exceptions;
 
 public class ValidationException : Exception
 {
+    public IEnumerable<string> Errors { get; }
     public ValidationException(ValidationResult validationResult)
     {
-        var validationErrors = validationResult.Errors.Select(error => error.ErrorMessage).ToList();
-        
+        Errors = validationResult.Errors.Select(error => error.ErrorMessage).ToList();
     }
 }
